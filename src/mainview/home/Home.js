@@ -45,7 +45,7 @@ const Home = () => {
                 ))
               }
             </Tabs>
-            <Button sx={{marginLeft:"auto"}} onClick={()=>navigate('login')} variant='contained'>Logout</Button>
+            <Button sx={{marginLeft:"auto"}} onClick={()=>navigate('/')} variant='contained'>Logout</Button>
                 </>
               )
             }

@@ -8,7 +8,7 @@ import { Grid, TextField, Button, Card, CardContent} from '@mui/material';
 
 
 function AddUser() {
-  const [frmData, setFormData] = useState({fname:'',lname:'',contact:'',empType:'',empField:'',empRole:'',address:''});
+  const [frmData, setFormData] = useState({fName:'',lName:'',contact:'',empType:'',empField:'',empRole:'',address:''});
   // let history = useHistory();
   const formSubmit = (event) => {
     event.preventDefault();
@@ -28,41 +28,16 @@ function AddUser() {
     console.log(event.target.value);
     console.log(event.target.name);
 
-    const value = event.target.value;
-    const name = event.target.name;
+    // const value = event.target.value;
+    // const name = event.target.name;
+    const {name,value} = event.target;
 
     setFormData((preValue)=>{
       console.log(preValue);
-      if(name === 'fName'){
-        return {
-          fname:value,lname:preValue.lname,contact:preValue.contact,empType:preValue.empType,empField:preValue.empField,empRole:preValue.empRole
-        }
-      }
-      if(name === 'lName'){
-        return {
-          fname:preValue.fname,lname:value,contact:preValue.contact,empType:preValue.empType,empField:preValue.empField,empRole:preValue.empRole
-        }
-      }
-      if(name === 'contact'){
-        return {
-          fname:preValue.fname,lname:preValue.lname,contact:value,empType:preValue.empType,empField:preValue.empField,empRole:preValue.empRole
-        }
-      }
-      if(name === 'empType'){
-        return {
-          fname:preValue.fname,lname:preValue.lname,contact:preValue.contact,empType:value,empField:preValue.empField,empRole:preValue.empRole
-        }
-      }
-      if(name === 'empField'){
-        return {
-          fname:preValue.fname,lname:preValue.lname,contact:preValue.contact,empType:preValue.empType,empField:value,empRole:preValue.empRole
-        }
-      }
-      if(name === 'empRole'){
-        return {
-          fname:preValue.fname,lname:preValue.lname,contact:preValue.contact,empType:preValue.empType,empField:preValue.empField,empRole:value
-        }
-      }
+      return {
+        ...preValue,
+        [name] : value
+      };
     })
   }
 
@@ -94,9 +69,9 @@ function AddUser() {
                 <Grid item xs={12}>
                   <TextField type="number" placeholder="Enter phone number" label="Phone" name='contact' onChange={inputEvent} value={frmData.contact} variant="outlined" fullWidth required />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <TextField label="Address" multiline rows={4} placeholder="Type your address here" onChange={inputEvent} value={frmData.contact} variant="outlined" fullWidth required />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary" fullWidth >Add</Button>
                 </Grid>

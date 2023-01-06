@@ -34,7 +34,10 @@ function ModeToggle() {
 
         // response.data.forEach(()nietos.push({'id':response.data.id,'fname':response.data.fname,'lname':response.data.lname,'employee_type':'Consultant'}));
         // setTableData(nietos);
-      });
+      })
+      .catch(error => {
+        console.log(error.response.data.error)
+     })
   }, []);
 
   if (!mounted) {
@@ -93,7 +96,7 @@ export default function Login() {
   placeholder="password"
   label="Password"
 />
-<Button sx={{ mt: 1 /* margin top */ }} onClick={()=>navigate('/')}>
+<Button sx={{ mt: 1 /* margin top */ }} onClick={()=>navigate('/home')}>
   Log in
 </Button>
 <Typography
