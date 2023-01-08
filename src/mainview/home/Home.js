@@ -2,9 +2,7 @@ import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar,IconButton,Typography, Tabs, Tab, Button, useMediaQuery,useTheme } from "@mui/material";
 import ThreePIcon from '@mui/icons-material/ThreeP';
-// import Logo from '../../assets/icons/logo.jpg';
 import DrawerComp from '../drawer/DrawerComp';
-// import UserList from '../users/UserList';
 import ContainerResponsive from '../container/ContainerResponsive';
 import AttandanceList from '../attandance/AttandanceList';
 

@@ -16,28 +16,7 @@ function ModeToggle() {
   // because mode is undefined on the server
   React.useEffect(() => {
     setMounted(true);
-    axios({
-      method: 'post',
-      url:'http://localhost:80/hris/login',
-      data: {
-        'username': 'yasir@ntoc',
-        'password': '1234'
-      }
-    })
-      .then(function (response) {
-        console.log(response);
-        // response.data.forEach(element => {
-        //   if(element.employee_type === '4'){
-        //     nietos.push({'id':element.id,'fname':element.fname,'lname':element.lname,'contact':element.contact})
-        //   }
-        // }
 
-        // response.data.forEach(()nietos.push({'id':response.data.id,'fname':response.data.fname,'lname':response.data.lname,'employee_type':'Consultant'}));
-        // setTableData(nietos);
-      })
-      .catch(error => {
-        console.log(error.response.data.error)
-     })
   }, []);
 
   if (!mounted) {
@@ -56,13 +35,52 @@ function ModeToggle() {
   );
 }
 
-
+axios.defaults.baseURL = 'http://localhost:80/hris/';
 
 export default function Login() {
   const navigate = useNavigate();
+  const [loginFormData, setLoginFormData] = React.useState({username:'',password:''});
+  localStorage.setItem('token','');
+
+  const loginFormSubmit = (event) => {
+    event.preventDefault();
+    console.log(loginFormData);
+    axios({
+      method: 'post',
+      url:'login',
+      data: loginFormData
+    })
+      .then(function (response) {
+        console.log(response);
+        if(response.data){
+          localStorage.setItem('token', response.data.access_token)
+          navigate('/home');
+        }
+      })
+      .catch(error => {
+        console.log(error.response.data.error)
+     })
+  }
+
+  const inputEvent = (event) => {
+    console.log(event.target.value);
+    console.log(event.target.name);
+
+    const {name,value} = event.target;
+
+    setLoginFormData((preValue)=>{
+      console.log(preValue);
+      return {
+        ...preValue,
+        [name] : value
+      };
+    })
+  }
+
   return (
     <CssVarsProvider>
       <ModeToggle/>
+      <form onSubmit={loginFormSubmit}>
 <Sheet
   sx={{
     width: 300,
@@ -84,19 +102,23 @@ export default function Login() {
 
   <TextField
   // html input attribute
-  name="email"
+  name="username"
   type="email"
   placeholder="yasirfayyaz@email.com"
   // pass down to FormLabel as children
   label="Email"
+  onChange={inputEvent}
+  value={loginFormData.username}
 />
 <TextField
   name="password"
   type="password"
   placeholder="password"
   label="Password"
+  onChange={inputEvent}
+  value={loginFormData.password}
 />
-<Button sx={{ mt: 1 /* margin top */ }} onClick={()=>navigate('/home')}>
+<Button type="submit" sx={{ mt: 1 /* margin top */ }} >
   Log in
 </Button>
 <Typography
@@ -108,6 +130,7 @@ export default function Login() {
 </Typography>
 
 </Sheet>
+</form>
     </CssVarsProvider>
   );
 }
